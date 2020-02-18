@@ -7,10 +7,18 @@
     <title>My Awesome App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Prompt&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    {{{body}}}
+
+    <div class="container">
+        {{>navbar}}
+        <section class="section"></section>
+        {{{body}}}
+        </section>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
         var socket = io('http://localhost:8080');
