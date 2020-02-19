@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const handlebars = require("express-handlebars");
+const mongoose = require("mongoose");
+const routes = require("./routes.js");
 
-const http = require("http");
-const io = require("socket.io")(http.createServer().listen(8080));
+mongoose.connect("mongodb://localhost:27017/local");
 
 app.set("view engine", "hbs");
 app.engine(
@@ -18,28 +19,8 @@ app.engine(
 );
 
 app.use(express.static("public"));
+app.use("/", routes);
 
 app.listen(port, () => {
   console.log(`App listening to port ${port}`);
-});
-
-io.on("connection", client => {
-  console.log("new connection");
-
-  client.emit("ch1", "welcome");
-
-  client.on("chat message", function(msg) {
-    console.log("message: " + msg);
-  });
-
-  client.on("event", data => {});
-  client.on("disconnect", () => {});
-});
-
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
-app.get("/sign-up", (req, res) => {
-  res.render("sign_up");
 });
