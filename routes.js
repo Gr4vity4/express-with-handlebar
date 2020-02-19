@@ -28,6 +28,7 @@ router.get("/sign-up", function(req, res) {
 
   res.render("sign_up", { form: form, errors: errors });
   res.clearCookie("old");
+  res.clearCookie("errors");
 });
 
 /* POST Method */
