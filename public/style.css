@@ -5,10 +5,11 @@ button {
 }
 
 .fix-footer {
-  position: absolute;
-  width: 100%;
+  position: fixed;
+  left: 0;
   bottom: 0;
-  overflow: hidden;
+  width: 100%;
+  padding: 15px 0 15px 0 !important;
 }
 
 /*! bulma.io v0.8.0 | MIT License | github.com/jgthms/bulma */
