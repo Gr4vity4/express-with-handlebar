@@ -20,6 +20,24 @@ router.get("/sign-up", function(req, res) {
 
 router.post("/sign-up", function(req, res) {
   console.log(req.body);
+
+  //   let firstName = req.body.first_name;
+  //   let lastName = req.body.last_name;
+  //   let email = req.body.email;
+  //   let password = req.body.password;
+  //   let password_confirmation = req.body.password_confirmation;
+
+  //   if (password !== password_confirmation) {
+  //     res.cookie("errors", "กรุณาตรวจสอบรหัสผ่านใหม่อีกครั้ง");
+  //     res
+  //       .cookie("old", {
+  //         firstName: firstName,
+  //         lastName: lastName,
+  //         email: email
+  //       })
+  //       .redirect(200, "sign-up");
+  //   }
+
   res.send("done.");
 });
 
