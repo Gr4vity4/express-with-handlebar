@@ -1,4 +1,6 @@
-body {
+body,
+input,
+button {
   font-family: "Prompt", sans-serif !important;
 }
 
