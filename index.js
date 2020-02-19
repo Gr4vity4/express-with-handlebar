@@ -37,7 +37,9 @@ io.on("connection", client => {
 });
 
 app.get("/", (req, res) => {
-  console.log("route /");
-
   res.render("home");
+});
+
+app.get("/sign-up", (req, res) => {
+  res.render("sign_up");
 });
