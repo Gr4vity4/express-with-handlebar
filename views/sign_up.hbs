@@ -5,13 +5,13 @@
             <div class="column is-half">
                 <h1 class="title">ลงทะเบียน</h1>
 
-                <form action="#" method="post">
+                <form action="/sign-up" method="post">
                     <div class="columns" style="margin-bottom: 0">
                         <div class="column">
                             <div class="field">
                                 <label for="">ชื่อ</label>
                                 <p class="control has-icons-left has-icons-right">
-                                    <input class="input" type="text" placeholder="ชื่อ">
+                                    <input class="input" type="text" name="first_name" placeholder="ชื่อ" required>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                     </span>
@@ -22,7 +22,7 @@
                             <div class="field">
                                 <label for="">นามสกุล</label>
                                 <p class="control has-icons-left has-icons-right">
-                                    <input class="input" type="text" placeholder="นามสกุล">
+                                    <input class="input" type="text" name="last_name" placeholder="นามสกุล" required>
                                 </p>
                             </div>
                         </div>
@@ -30,7 +30,7 @@
                     <div class="field">
                         <label for="">อีเมล</label>
                         <p class="control has-icons-left has-icons-right">
-                            <input class="input" type="email" placeholder="Email">
+                            <input class="input" type="email" name="email" placeholder="Email" required>
                             <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                             </span>
@@ -39,7 +39,8 @@
                     <div class="field">
                         <label for="">รหัสผ่าน</label>
                         <p class="control has-icons-left">
-                            <input class="input" type="password" placeholder="รหัสผ่าน">
+                            <input class="input" type="password" name="password" placeholder="รหัสผ่าน" minlength="6"
+                                required>
                             <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
@@ -48,7 +49,8 @@
                     <div class="field">
                         <label for="">ยืนยันรหัสผ่าน</label>
                         <p class="control has-icons-left">
-                            <input class="input" type="password" placeholder="ยืนยันรหัสผ่าน">
+                            <input class="input" type="password" minlength="6" name="password_confirmation"
+                                placeholder="ยืนยันรหัสผ่าน" required>
                             <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>

@@ -6,10 +6,12 @@ const mongoose = require("mongoose");
 const routes = require("./routes.js");
 require("dotenv").config();
 const env = process.env;
+let bodyParser = require("body-parser");
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
 
 mongoose.connect(`mongodb://${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}`);
-
-console.log(mongoose);
 
 app.set("view engine", "hbs");
 app.engine(
