@@ -11,3 +11,9 @@ button {
   width: 100%;
   padding: 15px 0 15px 0 !important;
 }
+
+.text-wrap {
+  white-space: normal;
+  word-wrap: anywhere;
+  height: auto;
+}
