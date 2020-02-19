@@ -1,15 +1,40 @@
 const express = require("express");
 const jwt = require("jwt-simple");
+require("dotenv").config();
+const env = process.env;
 let router = express.Router();
+const targetBaseUrl = env.APP_URL;
 
-const targetBaseUrl = "http://localhost:3000";
+const passport = require("passport");
+const ExtractJwt = require("passport-jwt").ExtractJwt; // decode jwt
+const JwtStrategy = require("passport-jwt").Strategy;
 
-router.use(function timeLog(req, res, next) {
-  console.log("Time: ", Date.now());
-  next();
-});
+var cookieExtractor = function(req) {
+  var token = null;
+  if (req && req.cookies) {
+    token = req.cookies["jwt"];
+  }
+  return token;
+};
 
-/* GET Method */
+const jwtOptions = {
+  jwtFromRequest: cookieExtractor,
+  secretOrKey: env.JWT_SECRET_KEY
+};
+
+passport.use(
+  new JwtStrategy(jwtOptions, (payload, done) => {
+    if (payload.sub === "success") {
+      done(null, true);
+    } else {
+      done(null, false);
+    }
+  })
+);
+
+const requireJWTAuth = passport.authenticate("jwt", { session: false });
+
+/* ===== GET Method ===== */
 
 router.get("/", function(req, res) {
   res.render("home");
@@ -36,7 +61,16 @@ router.get("/sign-in", function(req, res) {
   res.render("sign_in");
 });
 
-/* POST Method */
+router.get("/welcome", requireJWTAuth, function(req, res) {
+  res.render("welcome", { _token: req.cookies._token });
+});
+
+router.get("/logout", function(req, res) {
+  res.clearCookie("jwt");
+  res.redirect(`${targetBaseUrl}/`);
+});
+
+/* ===== POST Method ===== */
 
 router.post("/sign-up", function(req, res) {
   let firstName = req.body.first_name;
@@ -59,6 +93,22 @@ router.post("/sign-up", function(req, res) {
   }
 
   res.send("done.");
+});
+
+router.post("/sign-in", function(req, res) {
+  let email = req.body.email;
+  let password = req.body.password;
+
+  if (email === "test@test.com" && password === "1234") {
+    const payload = {
+      sub: "success",
+      iat: new Date().getTime()
+    };
+    res.cookie("jwt", jwt.encode(payload, env.JWT_SECRET_KEY));
+    res.redirect(`${targetBaseUrl}/welcome`);
+  }
+
+  res.redirect(`${targetBaseUrl}/sign-in`);
 });
 
 module.exports = router;
