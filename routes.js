@@ -1,4 +1,5 @@
 const express = require("express");
+const jwt = require("jwt-simple");
 let router = express.Router();
 
 const targetBaseUrl = "http://localhost:3000";
@@ -29,6 +30,10 @@ router.get("/sign-up", function(req, res) {
   res.render("sign_up", { form: form, errors: errors });
   res.clearCookie("old");
   res.clearCookie("errors");
+});
+
+router.get("/sign-in", function(req, res) {
+  res.render("sign_in");
 });
 
 /* POST Method */

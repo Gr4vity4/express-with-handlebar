@@ -10,6 +10,7 @@ let bodyParser = require("body-parser");
 let cookieParser = require("cookie-parser");
 
 // parse application/x-www-form-urlencoded
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
