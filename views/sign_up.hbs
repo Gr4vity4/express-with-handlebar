@@ -11,7 +11,8 @@
                             <div class="field">
                                 <label for="">ชื่อ</label>
                                 <p class="control has-icons-left has-icons-right">
-                                    <input class="input" type="text" name="first_name" placeholder="ชื่อ" required>
+                                    <input class="input" type="text" name="first_name" placeholder="ชื่อ"
+                                        value="{{form.firstName}}" required>
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                     </span>
@@ -22,7 +23,8 @@
                             <div class="field">
                                 <label for="">นามสกุล</label>
                                 <p class="control has-icons-left has-icons-right">
-                                    <input class="input" type="text" name="last_name" placeholder="นามสกุล" required>
+                                    <input class="input" type="text" name="last_name" placeholder="นามสกุล"
+                                        value="{{form.lastName}}" required>
                                 </p>
                             </div>
                         </div>
@@ -30,14 +32,15 @@
                     <div class="field">
                         <label for="">อีเมล</label>
                         <p class="control has-icons-left has-icons-right">
-                            <input class="input" type="email" name="email" placeholder="Email" required>
+                            <input class="input" type="email" name="email" placeholder="อีเมล" value="{{form.email}}"
+                                required>
                             <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                             </span>
                         </p>
                     </div>
                     <div class="field">
-                        <label for="">รหัสผ่าน</label>
+                        <label for="">รหัสผ่าน <span class="has-text-danger">{{ errors.password }}</span></label>
                         <p class="control has-icons-left">
                             <input class="input" type="password" name="password" placeholder="รหัสผ่าน" minlength="6"
                                 required>
