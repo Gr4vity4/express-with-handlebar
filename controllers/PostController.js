@@ -2,6 +2,7 @@ const jwt = require("jwt-simple");
 require("dotenv").config();
 const env = process.env;
 const targetBaseUrl = process.env.APP_URL;
+var userSchema = require("../schema/user");
 
 function sign_up(req, res) {
   let firstName = req.body.first_name;
@@ -22,6 +23,19 @@ function sign_up(req, res) {
     });
     res.redirect(`${targetBaseUrl}/sign-up`);
   }
+
+  // save user data
+  var userData = new userSchema({
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    password: password
+  });
+
+  userData.save(function(err, user) {
+    if (err) return console.log(err);
+    console.log(user.firstName + " saved to users collection");
+  });
 
   res.redirect(`${targetBaseUrl}/sign-in`);
 }
