@@ -48,6 +48,14 @@
 
             <div class="navbar-end">
                 <div class="navbar-item">
+
+                    {{#if login includeZero=true}}
+                    <div class="buttons">
+                        <a href="/logout" class="button is-light">
+                            ออกจากระบบ
+                        </a>
+                    </div>
+                    {{else}}
                     <div class="buttons">
                         <a href="/sign-up" class="button is-primary">
                             <strong>ลงทะเบียน</strong>
@@ -56,6 +64,8 @@
                             เข้าสู่ระบบ
                         </a>
                     </div>
+                    {{/if}}
+
                 </div>
             </div>
         </div>

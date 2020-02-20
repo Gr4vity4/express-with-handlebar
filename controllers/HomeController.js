@@ -2,8 +2,25 @@ require("dotenv").config();
 
 const targetBaseUrl = process.env.APP_URL;
 
+/* ===== Auth ===== */
+function userAuth(req) {
+  const jwt = require("jwt-simple");
+
+  if (req.cookies.jwt === undefined) {
+    return false;
+  }
+
+  const status = jwt.decode(req.cookies.jwt, process.env.JWT_SECRET_KEY);
+  if (status.sub === "success") {
+    return true;
+  } else {
+    return false;
+  }
+}
+/* ================ */
+
 function home(req, res) {
-  res.render("home");
+  res.render("home", { login: userAuth(req) });
 }
 
 function sign_up(req, res) {
@@ -28,7 +45,7 @@ function sign_in(req, res) {
 }
 
 function welcome(req, res) {
-  res.render("welcome", { _token: req.cookies._token });
+  res.render("welcome", { _token: req.cookies._token, login: userAuth(req) });
 }
 
 function logout(req, res) {
