@@ -41,19 +41,24 @@ function sign_up(req, res) {
 }
 
 function sign_in(req, res) {
-  let email = req.body.email;
-  let password = req.body.password;
+  const email = req.body.email;
+  const password = req.body.password;
 
-  if (email === "test@test.com" && password === "1234") {
-    const payload = {
-      sub: "success",
-      iat: new Date().getTime()
-    };
-    res.cookie("jwt", jwt.encode(payload, env.JWT_SECRET_KEY));
-    res.redirect(`${targetBaseUrl}/welcome`);
-  }
-
-  res.redirect(`${targetBaseUrl}/sign-in`);
+  const query = userSchema.find({ email: email, password: password }, function(
+    err,
+    documents
+  ) {
+    if (documents.length > 0) {
+      const payload = {
+        sub: "success",
+        iat: new Date().getTime()
+      };
+      res.cookie("jwt", jwt.encode(payload, env.JWT_SECRET_KEY));
+      res.redirect(`${targetBaseUrl}/welcome`);
+    } else {
+      res.redirect(`${targetBaseUrl}/sign-in`);
+    }
+  });
 }
 
 const PostController = {
