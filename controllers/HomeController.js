@@ -59,12 +59,17 @@ function logout(req, res) {
   res.redirect(`${targetBaseUrl}/`);
 }
 
+function course(req, res) {
+  res.render("course");
+}
+
 const HomeController = {
   home,
   sign_up,
   sign_in,
   welcome,
-  logout
+  logout,
+  course
 };
 
 module.exports = HomeController;

@@ -57,6 +57,10 @@ router.get("/logout", function(req, res) {
   HomeController.logout(req, res);
 });
 
+router.get("/course/:courseId", function(req, res) {
+  HomeController.course(req, res);
+});
+
 /* ===== POST Methods ===== */
 
 router.post("/sign-up", function(req, res) {
