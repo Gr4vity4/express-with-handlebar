@@ -8,6 +8,7 @@ require("dotenv").config();
 const env = process.env;
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
+var slug = require("slug");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());
@@ -23,7 +24,15 @@ app.engine(
     layoutsDir: __dirname + "/views/layouts",
     partialsDir: __dirname + "/views/partials",
     extname: "hbs",
-    defaultLayout: "index"
+    defaultLayout: "index",
+    helpers: {
+      toLowerCase: function(str) {
+        return str.toLowerCase();
+      },
+      urlLowerCase: function(str) {
+        return slug(str.toLowerCase());
+      }
+    }
   })
 );
 

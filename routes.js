@@ -62,7 +62,7 @@ router.get("/logout", function(req, res) {
   HomeController.logout(req, res);
 });
 
-router.get("/course/:courseId", function(req, res) {
+router.get("/course/:title", function(req, res) {
   HomeController.course(req, res);
 });
 
