@@ -63,13 +63,18 @@ function course(req, res) {
   res.render("course", { login: userAuth(req) });
 }
 
+function course_manage(req, res) {
+  res.render("course_manage");
+}
+
 const HomeController = {
   home,
   sign_up,
   sign_in,
   welcome,
   logout,
-  course
+  course,
+  course_manage
 };
 
 module.exports = HomeController;

@@ -66,6 +66,10 @@ router.get("/course/:title", function(req, res) {
   HomeController.course(req, res);
 });
 
+router.get("/course-manage", function(req, res) {
+  HomeController.course_manage(req, res);
+});
+
 /* ===== POST Methods ===== */
 
 router.post("/sign-up", function(req, res) {
