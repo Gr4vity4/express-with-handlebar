@@ -35,6 +35,11 @@ passport.use(
 
 const requireJWTAuth = passport.authenticate("jwt", { session: false });
 
+router.use(function(req, res, next) {
+  console.log("has new request");
+  next();
+});
+
 /* ===== GET Methods ===== */
 
 router.get("/", function(req, res) {
