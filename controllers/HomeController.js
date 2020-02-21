@@ -1,4 +1,5 @@
 require("dotenv").config();
+const courseSchema = require("../schema/course");
 
 const targetBaseUrl = process.env.APP_URL;
 
@@ -20,7 +21,12 @@ function userAuth(req) {
 /* ================ */
 
 function home(req, res) {
-  res.render("home", { login: userAuth(req) });
+  courseSchema.find({}, function(err, documents) {
+    res.render("home", {
+      login: userAuth(req),
+      courses: JSON.parse(JSON.stringify(documents))
+    });
+  });
 }
 
 function sign_up(req, res) {
