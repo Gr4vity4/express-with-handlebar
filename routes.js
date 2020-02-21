@@ -2,7 +2,7 @@ const express = require("express");
 const jwt = require("jwt-simple");
 require("dotenv").config();
 const env = process.env;
-let router = express.Router();
+var router = express.Router();
 const HomeController = require("./controllers/HomeController");
 const PostController = require("./controllers/PostController");
 

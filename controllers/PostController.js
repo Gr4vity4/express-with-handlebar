@@ -5,11 +5,11 @@ const targetBaseUrl = process.env.APP_URL;
 var userSchema = require("../schema/user");
 
 function sign_up(req, res) {
-  let firstName = req.body.first_name;
-  let lastName = req.body.last_name;
-  let email = req.body.email;
-  let password = req.body.password;
-  let password_confirmation = req.body.password_confirmation;
+  const firstName = req.body.first_name;
+  const lastName = req.body.last_name;
+  const email = req.body.email;
+  const password = req.body.password;
+  const password_confirmation = req.body.password_confirmation;
 
   if (password !== password_confirmation) {
     console.log(">>> passwords does not match.");
