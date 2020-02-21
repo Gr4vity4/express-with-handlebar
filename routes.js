@@ -24,7 +24,7 @@ const jwtOptions = {
 };
 
 passport.use(
-  new JwtStrategy(jwtOptions, (payload, done) => {
+  new JwtStrategy(jwtOptions, function(payload, done) {
     if (payload.sub === "success") {
       done(null, true);
     } else {

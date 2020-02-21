@@ -6,8 +6,8 @@ const mongoose = require("mongoose");
 const routes = require("./routes.js");
 require("dotenv").config();
 const env = process.env;
-let bodyParser = require("body-parser");
-let cookieParser = require("cookie-parser");
+var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());
@@ -30,6 +30,6 @@ app.engine(
 app.use(express.static("public"));
 app.use("/", routes);
 
-app.listen(port, () => {
+app.listen(port, function() {
   console.log(`App listening to port ${port}`);
 });
