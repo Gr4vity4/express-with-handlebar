@@ -60,7 +60,7 @@ function logout(req, res) {
 }
 
 function course(req, res) {
-  res.render("course");
+  res.render("course", { login: userAuth(req) });
 }
 
 const HomeController = {
