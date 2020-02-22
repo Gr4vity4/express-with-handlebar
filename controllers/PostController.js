@@ -4,6 +4,7 @@ const env = process.env;
 const targetBaseUrl = process.env.APP_URL;
 var userSchema = require("../schema/user");
 var courseSchema = require("../schema/course");
+var slug = require("slug");
 
 function sign_up(req, res) {
   const firstName = req.body.first_name;
@@ -90,10 +91,45 @@ function courses_manage_edit(req, res) {
   );
 }
 
+function courses_manage_create(req, res) {
+  const body = req.body;
+
+  courseSchema
+    .find()
+    .sort({ _id: -1 })
+    .limit(1)
+    .exec(function(err, data) {
+      var latestId = 0;
+      if (err) {
+        console.log(err);
+      } else {
+        const result = JSON.parse(JSON.stringify(data));
+
+        if (result[0] !== undefined) {
+          latestId = result[0].id + 1;
+        } else {
+          latestId = 1;
+        }
+      }
+
+      // create new course
+      courseSchema({
+        id: latestId,
+        title: body.title,
+        description: body.description,
+        price: body.price,
+        author: body.author,
+        slug: slug(body.title.toLowerCase())
+      }).save();
+      res.redirect(`${targetBaseUrl}/courses-manage`);
+    });
+}
+
 const PostController = {
   sign_up,
   sign_in,
-  courses_manage_edit
+  courses_manage_edit,
+  courses_manage_create
 };
 
 module.exports = PostController;

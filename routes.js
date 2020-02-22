@@ -117,6 +117,10 @@ router.put("/courses-manage/edit/:slug", requireJWTAuthAdmin, function(
   PostController.courses_manage_edit(req, res);
 });
 
+router.post("/courses-manage/create", requireJWTAuthAdmin, function(req, res) {
+  PostController.courses_manage_create(req, res);
+});
+
 /* ----- End Admin Only ----- */
 
 module.exports = router;
