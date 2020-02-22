@@ -13,33 +13,36 @@
 
                 <h1 class="title">แก้ไขคอร์สเรียน</h1>
 
-                <form action="/" method="post">
+                {{#each course}}
+                <form action="/courses-manage/edit/{{slug}}" method="post">
+                    <input type="hidden" name="_method" value="PUT">
                     <div class="field">
                         <label for="">ชื่อคอร์สเรียน</label>
                         <p class="control">
-                            <input class="input" type="text" name="" placeholder="e.g. ML Basic" value="{{form.email}}"
+                            <input class="input" type="text" name="title" placeholder="e.g. ML Basic" value="{{title}}"
                                 required>
                         </p>
                     </div>
                     <div class="field">
                         <label for="">คำอธิบายคอร์ส</label>
                         <p class="control">
-                            <textarea class="textarea" name="" id="" placeholder="Say something about this course ..."
-                                cols="30" rows="5"></textarea>
+                            <textarea class="textarea" name="description" id=""
+                                placeholder="Say something about this course ..." cols="30"
+                                rows="5">{{description}}</textarea>
                         </p>
                     </div>
                     <div class="field">
                         <label for="">ราคา</label>
                         <p class="control">
-                            <input class="input" type="number" name="" placeholder="e.g. 8888" value="{{form.email}}"
+                            <input class="input" type="number" name="price" placeholder="e.g. 8888" value="{{price}}"
                                 required>
                         </p>
                     </div>
                     <div class="field">
                         <label for="">ผู้สอน</label>
                         <p class="control">
-                            <input class="input" type="text" name="" placeholder="e.g. Mr.Robert" value="{{form.email}}"
-                                required>
+                            <input class="input" type="text" name="author" placeholder="e.g. Mr.Robert"
+                                value="{{author}}" required>
                         </p>
                     </div>
                     <div class="columns is-centered">
@@ -51,6 +54,7 @@
                         </div>
                     </div>
                 </form>
+                {{/each}}
             </div>
         </div>
 

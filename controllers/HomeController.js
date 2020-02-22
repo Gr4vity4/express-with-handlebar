@@ -110,7 +110,13 @@ function courses_manage_create(req, res) {
 }
 
 function courses_manage_edit(req, res) {
-  res.render("course/edit");
+  const slug = req.params.slug;
+
+  courseSchema.find({ slug: slug }, function(err, documents) {
+    res.render("course/edit", {
+      course: JSON.parse(JSON.stringify(documents))
+    });
+  });
 }
 
 const HomeController = {

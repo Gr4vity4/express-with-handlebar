@@ -8,12 +8,23 @@ require("dotenv").config();
 const env = process.env;
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
+var methodOverride = require("method-override");
 var slug = require("slug");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+  methodOverride(function(req, res) {
+    if (req.body && typeof req.body === "object" && "_method" in req.body) {
+      // look in urlencoded POST bodies and delete it
+      var method = req.body._method;
+      delete req.body._method;
+      return method;
+    }
+  })
+);
 
 mongoose.connect(`mongodb://${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}`);
 

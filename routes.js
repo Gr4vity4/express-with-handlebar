@@ -83,6 +83,16 @@ router.get("/course/:title", function(req, res) {
   HomeController.course(req, res);
 });
 
+/* ===== POST Methods ===== */
+
+router.post("/sign-up", function(req, res) {
+  PostController.sign_up(req, res);
+});
+
+router.post("/sign-in", function(req, res) {
+  PostController.sign_in(req, res);
+});
+
 /* ----- Start Admin Only ----- */
 
 router.get("/courses-manage", requireJWTAuthAdmin, function(req, res) {
@@ -100,16 +110,13 @@ router.get("/courses-manage/edit/:slug", requireJWTAuthAdmin, function(
   HomeController.courses_manage_edit(req, res);
 });
 
+router.put("/courses-manage/edit/:slug", requireJWTAuthAdmin, function(
+  req,
+  res
+) {
+  PostController.courses_manage_edit(req, res);
+});
+
 /* ----- End Admin Only ----- */
-
-/* ===== POST Methods ===== */
-
-router.post("/sign-up", function(req, res) {
-  PostController.sign_up(req, res);
-});
-
-router.post("/sign-in", function(req, res) {
-  PostController.sign_in(req, res);
-});
 
 module.exports = router;
