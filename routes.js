@@ -121,6 +121,13 @@ router.post("/courses-manage/create", requireJWTAuthAdmin, function(req, res) {
   PostController.courses_manage_create(req, res);
 });
 
+router.delete("/courses-manage/delete/:slug", requireJWTAuthAdmin, function(
+  req,
+  res
+) {
+  PostController.courses_manage_delete(req, res);
+});
+
 /* ----- End Admin Only ----- */
 
 module.exports = router;

@@ -125,11 +125,18 @@ function courses_manage_create(req, res) {
     });
 }
 
+function courses_manage_delete(req, res) {
+  courseSchema.deleteOne({ slug: req.params.slug }, function(err) {
+    res.redirect(`${targetBaseUrl}/courses-manage`);
+  });
+}
+
 const PostController = {
   sign_up,
   sign_in,
   courses_manage_edit,
-  courses_manage_create
+  courses_manage_create,
+  courses_manage_delete
 };
 
 module.exports = PostController;
