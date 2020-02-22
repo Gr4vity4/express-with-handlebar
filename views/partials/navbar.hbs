@@ -25,15 +25,11 @@
                     </a>
 
                     <div class="navbar-dropdown">
-                        <a class="navbar-item">
-                            คอร์สเรียนรู้ Machine Learning A
+                        {{#each courses}}
+                        <a href="/course/{{urlLowerCase title}}" class="navbar-item">
+                            {{ title }}
                         </a>
-                        <a class="navbar-item">
-                            คอร์สเรียนรู้ Machine Learning B
-                        </a>
-                        <a class="navbar-item">
-                            คอร์สเรียนรู้ Machine Learning C
-                        </a>
+                        {{/each}}
                     </div>
                 </div>
 
