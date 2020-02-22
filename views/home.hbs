@@ -2,10 +2,10 @@
     <div class="container">
         <h1 class="title">คอร์สมาใหม่</h1>
 
-        <div class="columns">
+        <div class="columns" style="overflow: auto">
 
             {{#each courses}}
-            <div class="column">
+            <div class="column is-3">
                 <div class="card">
                     <div class="card-image">
                         <a href="/course/{{urlLowerCase title}}">
