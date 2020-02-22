@@ -18,6 +18,21 @@ function userAuth(req) {
     return false;
   }
 }
+
+function adminAuth(req) {
+  const jwt = require("jwt-simple");
+
+  if (req.cookies.jwt === undefined) {
+    return false;
+  }
+
+  const status = jwt.decode(req.cookies.jwt, process.env.JWT_SECRET_KEY);
+  if (status.sub === "admin") {
+    return true;
+  } else {
+    return false;
+  }
+}
 /* ================ */
 
 function home(req, res) {
@@ -82,7 +97,12 @@ function course(req, res) {
 }
 
 function courses_manage(req, res) {
-  res.render("courses_manage");
+  courseSchema.find({}, function(err, documents) {
+    res.render("courses_manage", {
+      courses: JSON.parse(JSON.stringify(documents)),
+      login: adminAuth(req)
+    });
+  });
 }
 
 const HomeController = {
