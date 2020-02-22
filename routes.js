@@ -83,9 +83,24 @@ router.get("/course/:title", function(req, res) {
   HomeController.course(req, res);
 });
 
+/* ----- Start Admin Only ----- */
+
 router.get("/courses-manage", requireJWTAuthAdmin, function(req, res) {
   HomeController.courses_manage(req, res);
 });
+
+router.get("/courses-manage/create", requireJWTAuthAdmin, function(req, res) {
+  HomeController.courses_manage_create(req, res);
+});
+
+router.get("/courses-manage/edit/:slug", requireJWTAuthAdmin, function(
+  req,
+  res
+) {
+  HomeController.courses_manage_edit(req, res);
+});
+
+/* ----- End Admin Only ----- */
 
 /* ===== POST Methods ===== */
 

@@ -1,0 +1,50 @@
+<section class="section" style="min-height: calc(100vh - 400px)">
+    <div class="container">
+
+        <div class="columns is-centered">
+            <div class="column is-half">
+                <h1 class="title">แก้ไขคอร์สเรียน</h1>
+
+                <form action="/" method="post">
+                    <div class="field">
+                        <label for="">ชื่อคอร์สเรียน</label>
+                        <p class="control">
+                            <input class="input" type="text" name="" placeholder="e.g. ML Basic" value="{{form.email}}"
+                                required>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label for="">คำอธิบายคอร์ส</label>
+                        <p class="control">
+                            <textarea class="textarea" name="" id="" placeholder="Say something about this course ..."
+                                cols="30" rows="5"></textarea>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label for="">ราคา</label>
+                        <p class="control">
+                            <input class="input" type="number" name="" placeholder="e.g. 8888" value="{{form.email}}"
+                                required>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label for="">ผู้สอน</label>
+                        <p class="control">
+                            <input class="input" type="text" name="" placeholder="e.g. Mr.Robert" value="{{form.email}}"
+                                required>
+                        </p>
+                    </div>
+                    <div class="columns is-centered">
+                        <div class="column is-half is-offset-one-quarter">
+                            <button class="button is-success is-rounded" style="margin-top: 15px">
+                                <i class="fas fa-save"></i>
+                                &nbsp;บันทึกข้อมูล
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>

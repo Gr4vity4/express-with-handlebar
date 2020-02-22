@@ -105,6 +105,14 @@ function courses_manage(req, res) {
   });
 }
 
+function courses_manage_create(req, res) {
+  res.render("course/create");
+}
+
+function courses_manage_edit(req, res) {
+  res.render("course/edit");
+}
+
 const HomeController = {
   home,
   sign_up,
@@ -112,7 +120,9 @@ const HomeController = {
   welcome,
   logout,
   course,
-  courses_manage
+  courses_manage,
+  courses_manage_create,
+  courses_manage_edit
 };
 
 module.exports = HomeController;
