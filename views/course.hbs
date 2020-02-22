@@ -1,7 +1,12 @@
+{{#with info}}
 <section class="section" style="min-height: calc(100vh - 400px)">
     <div class="container">
 
-        <span class="title">รายละเอียดคอร์ส <span class="has-text-primary">ML Kid</span></span>
+        <span class="title">รายละเอียดคอร์ส
+            <span class="has-text-primary">
+                {{title}}
+            </span>
+        </span>
 
         <div class="columns">
             <div class="column">
@@ -16,8 +21,8 @@
             <div class="column">
 
                 <section class="section">
-                    <h1 class="title">คอร์สเรียน ML Kid</h1>
-                    <h1 class="title">฿7,500.00</h1>
+                    <h1 class="title">คอร์สเรียน {{title}}</h1>
+                    <h1 class="title">{{numberFormat price}}</h1>
                     <h2 class="subtitle" style="font-weight: 300;">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hoc ne statuam quidem dicturam pater
                         aiebat, si loqui posset. Duo Reges: constructio interrete. Negat esse eam, inquit, propter se
@@ -37,15 +42,7 @@
         <section>
             <h4 class="title is-4">คำอธิบายหลักสูตร</h4>
             <p style="font-weight: 300;">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Hoc ne statuam quidem dicturam
-                pater
-                aiebat, si loqui posset. Duo Reges: constructio interrete. Negat esse eam, inquit, propter
-                se
-                expetendam. Vitae autem degendae ratio maxime quidem illis placuit quieta. Quid igitur
-                dubitamus
-                in tota eius natura quaerere quid sit effectum? Claudii libidini, qui tum erat summo ne
-                imperio,
-                dederetur.
+                {{description}}
             </p>
         </section>
 
@@ -83,3 +80,4 @@
 
     </div>
 </section>
+{{/with}}

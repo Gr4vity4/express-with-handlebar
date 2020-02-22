@@ -60,7 +60,25 @@ function logout(req, res) {
 }
 
 function course(req, res) {
-  res.render("course", { login: userAuth(req) });
+  var info = {};
+  var docs = {};
+
+  courseSchema.find({}, function(err, documents) {
+    docs = JSON.parse(JSON.stringify(documents));
+
+    docs.forEach(function(doc) {
+      if (doc.slug === req.params.title) {
+        info = doc;
+      }
+    });
+
+    console.log(info);
+    res.render("course", {
+      login: userAuth(req),
+      courses: docs,
+      info: info
+    });
+  });
 }
 
 function course_manage(req, res) {

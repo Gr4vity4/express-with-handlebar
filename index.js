@@ -31,6 +31,12 @@ app.engine(
       },
       urlLowerCase: function(str) {
         return slug(str.toLowerCase());
+      },
+      numberFormat: function(value) {
+        return new Intl.NumberFormat("th-TH", {
+          style: "currency",
+          currency: "THB"
+        }).format(value);
       }
     }
   })
