@@ -38,7 +38,8 @@ function adminAuth(req) {
 function home(req, res) {
   courseSchema.find({}, function(err, documents) {
     res.render("home", {
-      login: userAuth(req),
+      login: userAuth(req) || adminAuth(req),
+      adminLogin: adminAuth(req),
       courses: JSON.parse(JSON.stringify(documents))
     });
   });
@@ -62,7 +63,11 @@ function sign_up(req, res) {
 }
 
 function sign_in(req, res) {
-  res.render("sign_in");
+  if (userAuth(req) || adminAuth(req)) {
+    res.redirect(`${targetBaseUrl}/`);
+  } else {
+    res.render("sign_in");
+  }
 }
 
 function welcome(req, res) {
@@ -89,7 +94,8 @@ function course(req, res) {
 
     console.log(info);
     res.render("course", {
-      login: userAuth(req),
+      login: userAuth(req) || adminAuth(req),
+      adminLogin: adminAuth(req),
       courses: docs,
       info: info
     });
