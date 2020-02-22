@@ -81,8 +81,8 @@ function course(req, res) {
   });
 }
 
-function course_manage(req, res) {
-  res.render("course_manage");
+function courses_manage(req, res) {
+  res.render("courses_manage");
 }
 
 const HomeController = {
@@ -92,7 +92,7 @@ const HomeController = {
   welcome,
   logout,
   course,
-  course_manage
+  courses_manage
 };
 
 module.exports = HomeController;

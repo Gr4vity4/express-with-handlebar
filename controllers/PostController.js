@@ -44,21 +44,31 @@ function sign_in(req, res) {
   const email = req.body.email;
   const password = req.body.password;
 
-  const query = userSchema.find({ email: email, password: password }, function(
-    err,
-    documents
-  ) {
-    if (documents.length > 0) {
-      const payload = {
-        sub: "success",
-        iat: new Date().getTime()
-      };
-      res.cookie("jwt", jwt.encode(payload, env.JWT_SECRET_KEY));
-      res.redirect(`${targetBaseUrl}/welcome`);
-    } else {
-      res.redirect(`${targetBaseUrl}/sign-in`);
-    }
-  });
+  /* Demo Admin Account */
+  if (email === "admin@admin.com" && password === "12345678") {
+    const payload = {
+      sub: "admin",
+      iat: new Date().getTime()
+    };
+    res.cookie("jwt", jwt.encode(payload, env.JWT_SECRET_KEY));
+    res.redirect(`${targetBaseUrl}/courses-manage`);
+  } else {
+    const query = userSchema.find(
+      { email: email, password: password },
+      function(err, documents) {
+        if (documents.length > 0) {
+          const payload = {
+            sub: "success",
+            iat: new Date().getTime()
+          };
+          res.cookie("jwt", jwt.encode(payload, env.JWT_SECRET_KEY));
+          res.redirect(`${targetBaseUrl}/welcome`);
+        } else {
+          res.redirect(`${targetBaseUrl}/sign-in`);
+        }
+      }
+    );
+  }
 }
 
 const PostController = {

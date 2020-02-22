@@ -24,6 +24,7 @@ const jwtOptions = {
 };
 
 passport.use(
+  "user-rule",
   new JwtStrategy(jwtOptions, function(payload, done) {
     if (payload.sub === "success") {
       done(null, true);
@@ -33,7 +34,23 @@ passport.use(
   })
 );
 
-const requireJWTAuth = passport.authenticate("jwt", { session: false });
+passport.use(
+  "admin-rule",
+  new JwtStrategy(jwtOptions, function(payload, done) {
+    if (payload.sub === "admin") {
+      done(null, true);
+    } else {
+      done(null, false);
+    }
+  })
+);
+
+const requireJWTAuthUser = passport.authenticate("user-rule", {
+  session: false
+});
+const requireJWTAuthAdmin = passport.authenticate("admin-rule", {
+  session: false
+});
 
 router.use(function(req, res, next) {
   console.log("has new request");
@@ -54,7 +71,7 @@ router.get("/sign-in", function(req, res) {
   HomeController.sign_in(req, res);
 });
 
-router.get("/welcome", requireJWTAuth, function(req, res) {
+router.get("/welcome", requireJWTAuthUser, function(req, res) {
   HomeController.welcome(req, res);
 });
 
@@ -66,8 +83,8 @@ router.get("/course/:title", function(req, res) {
   HomeController.course(req, res);
 });
 
-router.get("/course-manage", function(req, res) {
-  HomeController.course_manage(req, res);
+router.get("/courses-manage", requireJWTAuthAdmin, function(req, res) {
+  HomeController.courses_manage(req, res);
 });
 
 /* ===== POST Methods ===== */
