@@ -113,11 +113,17 @@ function course(req, res) {
 }
 
 function courses_manage(req, res) {
-  courseSchema.find({}, function(err, documents) {
-    res.render("courses_manage", {
-      courses: JSON.parse(JSON.stringify(documents)),
-      login: adminAuth(req)
-    });
+  mongodbCloud.connect(function(err) {
+    mongodbCloud
+      .db(process.env.DB_NAME)
+      .collection("courses", function(err, collection) {
+        collection.find().toArray(function(err, items) {
+          res.render("courses_manage", {
+            courses: JSON.parse(JSON.stringify(items)),
+            login: adminAuth(req)
+          });
+        });
+      });
   });
 }
 
@@ -128,10 +134,16 @@ function courses_manage_create(req, res) {
 function courses_manage_edit(req, res) {
   const slug = req.params.slug;
 
-  courseSchema.find({ slug: slug }, function(err, documents) {
-    res.render("course/edit", {
-      course: JSON.parse(JSON.stringify(documents))
-    });
+  mongodbCloud.connect(function(err) {
+    mongodbCloud
+      .db(process.env.DB_NAME)
+      .collection("courses", function(err, collection) {
+        collection.find({ slug: slug }).toArray(function(err, items) {
+          res.render("course/edit", {
+            course: JSON.parse(JSON.stringify(items))
+          });
+        });
+      });
   });
 }
 
