@@ -100,37 +100,35 @@ function courses_manage_edit(req, res) {
 }
 
 function courses_manage_create(req, res) {
+  var latestId = 1;
   const body = req.body;
 
-  courseSchema
-    .find()
-    .sort({ _id: -1 })
-    .limit(1)
-    .exec(function(err, data) {
-      var latestId = 0;
-      if (err) {
-        console.log(err);
-      } else {
-        const result = JSON.parse(JSON.stringify(data));
+  mongodbCloud.connect(function(err) {
+    mongodbCloud
+      .db(process.env.DB_NAME)
+      .collection("courses")
+      .aggregate([{ $sort: { _id: -1 } }, { $limit: 1 }], function(err, items) {
+        items
+          .forEach(function(item) {
+            latestId += item.id;
+          })
+          .then(function() {
+            mongodbCloud
+              .db(process.env.DB_NAME)
+              .collection("courses")
+              .insertOne({
+                id: latestId,
+                title: body.title,
+                description: body.description,
+                price: body.price,
+                author: body.author,
+                slug: slug(body.title.toLowerCase())
+              });
 
-        if (result[0] !== undefined) {
-          latestId = result[0].id + 1;
-        } else {
-          latestId = 1;
-        }
-      }
-
-      // create new course
-      courseSchema({
-        id: latestId,
-        title: body.title,
-        description: body.description,
-        price: body.price,
-        author: body.author,
-        slug: slug(body.title.toLowerCase())
-      }).save();
-      res.redirect(`${targetBaseUrl}/courses-manage`);
-    });
+            res.redirect(`${targetBaseUrl}/courses-manage`);
+          });
+      });
+  });
 }
 
 function courses_manage_delete(req, res) {
