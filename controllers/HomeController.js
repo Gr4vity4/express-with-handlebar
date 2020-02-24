@@ -90,22 +90,25 @@ function course(req, res) {
   var info = {};
   var docs = {};
 
-  courseSchema.find({}, function(err, documents) {
-    docs = JSON.parse(JSON.stringify(documents));
+  mongodbCloud.connect(function(err) {
+    mongodbCloud
+      .db(process.env.DB_NAME)
+      .collection("courses", function(err, collection) {
+        collection.find().toArray(function(err, items) {
+          items.forEach(function(doc) {
+            if (doc.slug === req.params.title) {
+              info = doc;
+            }
+          });
 
-    docs.forEach(function(doc) {
-      if (doc.slug === req.params.title) {
-        info = doc;
-      }
-    });
-
-    console.log(info);
-    res.render("course", {
-      login: userAuth(req) || adminAuth(req),
-      adminLogin: adminAuth(req),
-      courses: docs,
-      info: info
-    });
+          res.render("course", {
+            login: userAuth(req) || adminAuth(req),
+            adminLogin: adminAuth(req),
+            courses: docs,
+            info: info
+          });
+        });
+      });
   });
 }
 
