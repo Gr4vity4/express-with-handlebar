@@ -42,7 +42,6 @@ function home(req, res) {
       .db(process.env.DB_NAME)
       .collection("courses", function(err, collection) {
         collection.find().toArray(function(err, items) {
-          mongodbCloud.close();
           res.render("home", {
             login: userAuth(req) || adminAuth(req),
             adminLogin: adminAuth(req),
