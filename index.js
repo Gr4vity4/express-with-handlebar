@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const handlebars = require("express-handlebars");
-const mongoose = require("mongoose");
 const routes = require("./routes.js");
 require("dotenv").config();
 const env = process.env;
@@ -25,8 +24,6 @@ app.use(
     }
   })
 );
-
-mongoose.connect(`mongodb://${env.DB_HOST}:${env.DB_PORT}/${env.DB_DATABASE}`);
 
 app.set("view engine", "hbs");
 app.engine(

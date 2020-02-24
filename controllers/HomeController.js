@@ -1,5 +1,6 @@
 require("dotenv").config();
 const courseSchema = require("../schema/course");
+const mongodbCloud = require("../mongodb-cloud");
 
 const targetBaseUrl = process.env.APP_URL;
 
@@ -36,12 +37,19 @@ function adminAuth(req) {
 /* ================ */
 
 function home(req, res) {
-  courseSchema.find({}, function(err, documents) {
-    res.render("home", {
-      login: userAuth(req) || adminAuth(req),
-      adminLogin: adminAuth(req),
-      courses: JSON.parse(JSON.stringify(documents))
-    });
+  mongodbCloud.connect(function(err) {
+    mongodbCloud
+      .db(process.env.DB_NAME)
+      .collection("courses", function(err, collection) {
+        collection.find().toArray(function(err, items) {
+          mongodbCloud.close();
+          res.render("home", {
+            login: userAuth(req) || adminAuth(req),
+            adminLogin: adminAuth(req),
+            courses: JSON.parse(JSON.stringify(items))
+          });
+        });
+      });
   });
 }
 
