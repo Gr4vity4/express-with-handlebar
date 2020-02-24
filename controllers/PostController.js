@@ -4,6 +4,7 @@ const env = process.env;
 const targetBaseUrl = process.env.APP_URL;
 var userSchema = require("../schema/user");
 var courseSchema = require("../schema/course");
+const mongodbCloud = require("../mongodb-cloud");
 var slug = require("slug");
 
 function sign_up(req, res) {
@@ -76,19 +77,26 @@ function sign_in(req, res) {
 function courses_manage_edit(req, res) {
   const slug = req.params.slug;
   const body = req.body;
-  courseSchema.updateOne(
-    { slug: slug },
-    {
-      title: body.title,
-      description: body.description,
-      price: body.price,
-      author: body.author
-    },
-    { new: true },
-    function(err, document) {
-      res.redirect(`${targetBaseUrl}/courses-manage`);
-    }
-  );
+
+  mongodbCloud.connect(function(err) {
+    mongodbCloud
+      .db(process.env.DB_NAME)
+      .collection("courses", function(err, collection) {
+        collection.updateOne(
+          { slug: slug },
+          {
+            $set: {
+              title: body.title,
+              description: body.description,
+              price: body.price,
+              author: body.author
+            }
+          }
+        );
+
+        res.redirect(`${targetBaseUrl}/courses-manage`);
+      });
+  });
 }
 
 function courses_manage_create(req, res) {
