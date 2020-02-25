@@ -104,7 +104,11 @@ function courses_manage_edit(req, res) {
               title: body.title,
               description: body.description,
               price: body.price,
-              author: body.author
+              author: body.author,
+              image:
+                "https://storage.googleapis.com/io-19-assets/images/global/io-social-banner.png",
+              author_image:
+                "https://image.flaticon.com/icons/svg/1587/1587565.svg"
             }
           }
         );
@@ -137,7 +141,11 @@ function courses_manage_create(req, res) {
                 description: body.description,
                 price: body.price,
                 author: body.author,
-                slug: slug(body.title.toLowerCase())
+                slug: slug(body.title.toLowerCase()),
+                image:
+                  "https://storage.googleapis.com/io-19-assets/images/global/io-social-banner.png",
+                author_image:
+                  "https://image.flaticon.com/icons/svg/1587/1587565.svg"
               });
 
             res.redirect(`${targetBaseUrl}/courses-manage`);
