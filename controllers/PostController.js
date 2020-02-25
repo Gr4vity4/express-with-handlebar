@@ -132,9 +132,12 @@ function courses_manage_create(req, res) {
 }
 
 function courses_manage_delete(req, res) {
-  courseSchema.deleteOne({ slug: req.params.slug }, function(err) {
-    res.redirect(`${targetBaseUrl}/courses-manage`);
-  });
+  mongodbCloud
+    .db(process.env.DB_NAME)
+    .collection("courses")
+    .deleteOne({ slug: req.params.slug }, function(err) {
+      res.redirect(`${targetBaseUrl}/courses-manage`);
+    });
 }
 
 const PostController = {
