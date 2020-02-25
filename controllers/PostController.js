@@ -27,20 +27,22 @@ function sign_up(req, res) {
     res.redirect(`${targetBaseUrl}/sign-up`);
   }
 
-  // save user data
-  var userData = new userSchema({
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    password: password
+  mongodbCloud.connect(function(err) {
+    mongodbCloud
+      .db(process.env.DB_NAME)
+      .collection("users")
+      .insertOne(
+        {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password
+        },
+        function(err) {
+          res.redirect(`${targetBaseUrl}/sign-in`);
+        }
+      );
   });
-
-  userData.save(function(err, user) {
-    if (err) return console.log(err);
-    console.log(user.firstName + " saved to users collection");
-  });
-
-  res.redirect(`${targetBaseUrl}/sign-in`);
 }
 
 function sign_in(req, res) {
@@ -56,21 +58,34 @@ function sign_in(req, res) {
     res.cookie("jwt", jwt.encode(payload, env.JWT_SECRET_KEY));
     res.redirect(`${targetBaseUrl}/courses-manage`);
   } else {
-    const query = userSchema.find(
-      { email: email, password: password },
-      function(err, documents) {
-        if (documents.length > 0) {
-          const payload = {
-            sub: "success",
-            iat: new Date().getTime()
-          };
-          res.cookie("jwt", jwt.encode(payload, env.JWT_SECRET_KEY));
-          res.redirect(`${targetBaseUrl}/welcome`);
-        } else {
-          res.redirect(`${targetBaseUrl}/sign-in`);
-        }
-      }
-    );
+    var found = false;
+    mongodbCloud.connect(function(err) {
+      mongodbCloud
+        .db(process.env.DB_NAME)
+        .collection("users", function(err, collection) {
+          collection.find({ email: email, password: password }, function(
+            err,
+            items
+          ) {
+            items
+              .forEach(function(item) {
+                found += true;
+              })
+              .then(function() {
+                if (found) {
+                  const payload = {
+                    sub: "success",
+                    iat: new Date().getTime()
+                  };
+                  res.cookie("jwt", jwt.encode(payload, env.JWT_SECRET_KEY));
+                  res.redirect(`${targetBaseUrl}/welcome`);
+                } else {
+                  res.redirect(`${targetBaseUrl}/sign-in`);
+                }
+              });
+          });
+        });
+    });
   }
 }
 
